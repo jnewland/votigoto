@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link rel="stylesheet" href="stylesheets/screen.css" type="text/css" media="screen" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>
+      votigoto
+  </title>
+  <script src="javascripts/rounded_corners_lite.inc.js" type="text/javascript"></script>
+<style>
+
+</style>
+  <script type="text/javascript">
+    window.onload = function() {
+      settings = {
+          tl: { radius: 10 },
+          tr: { radius: 10 },
+          bl: { radius: 10 },
+          br: { radius: 10 },
+          antiAlias: true,
+          autoPad: true,
+          validTags: ["div"]
+      }
+      var versionBox = new curvyCorners(settings, document.getElementById("version"));
+      versionBox.applyCornersToAll();
+    }
+  </script>
+</head>
+<body>
+<div id="main">
+
+    <h1>votigoto</h1>
+    <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/votigoto"; return false'>
+      <p>Get Version</p>
+      <a href="http://rubyforge.org/projects/votigoto" class="numbers">0.2.0</a>
+    </div>
+    <p>Ruby can has TiVo&reg;?</p>
+
+
+	<h2>What?</h2>
+
+
+	<p>Simple Ruby abstraction of the TiVoToGo&trade; protocol. <strong>Only works on Series2 TiVos</strong>.</p>
+
+
+	<h2>Why?</h2>
+
+
+	<p>Because my office is upstairs, my TiVo is downstairs, and the built in web interface is <span class="caps">UGLY</span>.</p>
+
+
+	<h2>Installing</h2>
+
+
+<pre syntax="ruby">sudo gem install votigoto</pre>
+
+	<h2>Demonstration of usage</h2>
+
+
+<pre syntax="ruby">
+&gt;&gt; require 'votigoto'
+=&gt; true
+&gt;&gt; tivo = Votigoto::Base.new("10.0.0.148","SEKRET_MEDIA_ACCESS_KEY")
+=&gt; #&lt;Votigoto::Base:0x14095d8 @mak="SEKRET_MEDIA_ACCESS_KEY", @ip="10.0.0.148"&gt;
+&gt;&gt; tivo.shows.first.to_s
+=&gt; "The Daily Show With Jon Stewart - Senator Joe Biden (D-Del.)." 
+</pre>
+
+	<h2>Grrr</h2>
+
+
+	<p>If you&#8217;re on <span class="caps">OS X</span>, and have <a href="http://growl.info/documentation/growlnotify.php">growlnotify</a> installed, this gem includes a daemon that will notify you via Growl of new shows on your TiVo:</p>
+
+
+<pre>
+$ tivo_growl 
+Please edit ~/.tivo to include your TiVo's IP and Media Access Key
+Textmate users: mate ~/.tivo
+$ mate .tivo
+$ tivo_growl
+$
+</pre>
+
+	<h2>Hacking</h2>
+
+
+	<p>The <span class="caps">SVN</span> repo is <code>svn://rubyforge.org/var/svn/votigoto/trunk</code>. To chip in, <a href="http://pastie.caboo.se">pastie</a> your patches and email a link to <a href="mailto:jnewland@gmail.com">Jesse Newland</a>.</p>
+
+
+	<h2>License</h2>
+
+
+	<p>This code is free to use under the terms of the <span class="caps">MIT</span> license.</p>
+
+
+	<h2>Disclaimer</h2>
+
+
+	<p>This project is in no way associated with TiVo or TiVo, Inc. TiVo and the TiVo logo are registered trademarks of TiVo Inc. or its subsidiaries.</p>
+
+
+	<h2>Contact</h2>
+
+
+	<p>Comments are welcome. Send an email to <a href="mailto:jnewland@gmail.com">Jesse Newland</a>.</p>
+    <p class="coda">
+      <a href="http://soylentfoo.jnewland.com/">Jesse Newland</a>, 9th August 2007<br>
+      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
+    </p>
+</div>
+
+<!-- insert site tracking codes here, like Google Urchin -->
+
+</body>
+</html>

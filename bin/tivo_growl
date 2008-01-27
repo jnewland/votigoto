@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+
+# modified from code by Alex Payne and Matt Biddulph and Damien Tanner
+# requires growlnotify
+
+require 'rubygems'
+require 'votigoto'
+require 'fileutils'
+require 'daemons'
+
+template = <<EOF
+# .tivo
+# 
+# Please fill in fields like this:
+#
+#  ip: 10.0.0.148
+#  media_access_key: 79TGYHUUY87T9GYU
+#
+ip: 
+media_access_key: 
+EOF
+
+interval = 15     # minutes between checks
+growlnotifybin = "/usr/local/bin/growlnotify"
+timefile = ENV['HOME'] + "/.votigoto-date"
+
+# ensure config file for twitter gem exists
+begin
+  config = YAML::load open(ENV['HOME'] + "/.tivo")
+rescue
+  open(ENV["HOME"] + '/.tivo','w').write(template)
+  config = YAML::load open(ENV['HOME'] + "/.tivo")
+end
+
+# make sure there's actually account information in there
+if config == false or config['ip'] == nil or config['media_access_key'] == nil
+  puts "Please edit ~/.tivo to include your TiVo's IP and Media Access Key\nTextmate users: mate ~/.tivo"
+  exit(0)
+end
+
+Daemons.daemonize
+
+loop do  
+  begin
+    last = Time.parse(open(timefile).read)
+  rescue
+    last = Time.now.to_s
+  end
+  
+  begin
+    tivo = Votigoto::Base.new(config['ip'], config['media_access_key'])
+  
+    new_shows = tivo.shows(true).select { |show| show.capture_date > Time.parse(last.to_s) }
+    
+    new_shows.each do |show| 
+      system "#{growlnotifybin} -n votigoto -t \"#{show.source_station.capitalize}\" -m \"#{show.title}\""
+    end
+  rescue
+    # system "#{growlnotifybin} -n votigoto -t \"Votigo Error\" -m \"#{$!.to_s.gsub("`","'")}\""
+  end          
+  
+  tf = open(timefile, "w")
+  tf.write(Time.now.to_s)
+  tf.close
+  
+  sleep(interval * 60)
+end

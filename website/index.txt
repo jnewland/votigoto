@@ -1,0 +1,55 @@
+h1. votigoto
+
+Ruby can has TiVo&reg;?
+
+h2. What?
+
+Simple Ruby abstraction of the TiVoToGo&trade; protocol. *Only works on Series2 TiVos*.
+
+h2. Why?
+
+Because my office is upstairs, my TiVo is downstairs, and the built in web interface is UGLY.
+
+h2. Installing
+
+<pre syntax="ruby">sudo gem install votigoto</pre>
+
+h2. Demonstration of usage
+
+<pre syntax="ruby">
+>> require 'votigoto'
+=> true
+>> tivo = Votigoto::Base.new("10.0.0.148","SEKRET_MEDIA_ACCESS_KEY")
+=> #<Votigoto::Base:0x14095d8 @mak="SEKRET_MEDIA_ACCESS_KEY", @ip="10.0.0.148">
+>> tivo.shows.first.to_s
+=> "The Daily Show With Jon Stewart - Senator Joe Biden (D-Del.)."
+</pre>
+
+h2. Grrr
+
+If you're on OS X, and have "growlnotify":http://growl.info/documentation/growlnotify.php installed, this gem includes a daemon that will notify you via Growl of new shows on your TiVo:
+
+<pre>
+$ tivo_growl 
+Please edit ~/.tivo to include your TiVo's IP and Media Access Key
+Textmate users: mate ~/.tivo
+$ mate .tivo
+$ tivo_growl
+$
+</pre>
+
+h2. Hacking
+
+The SVN repo is <code>svn://rubyforge.org/var/svn/votigoto/trunk</code>. To chip in, "pastie":http://pastie.caboo.se your patches and email a link to "Jesse Newland":mailto:jnewland@gmail.com.
+
+h2. License
+
+This code is free to use under the terms of the MIT license. 
+
+h2. Disclaimer
+
+This project is in no way associated with TiVo or TiVo, Inc. TiVo and the TiVo logo are registered trademarks of TiVo Inc. or its subsidiaries.
+
+h2. Contact
+
+Comments are welcome. Send an email to "Jesse Newland":mailto:jnewland@gmail.com.
